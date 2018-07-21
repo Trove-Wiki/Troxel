@@ -128,7 +128,18 @@ class Base64IO extends require('./IO.coffee')
         i += r
     console.log "export base64:"
     console.log data
-    btoa String.fromCharCode.apply null, data
+    btoa __arrayBufferToBase64 data
+	
+
+__arrayBufferToBase64 = (buffer) ->
+  binary = ''
+  bytes = new Uint8Array(buffer)
+  len = bytes.byteLength
+  i = 0
+  while i < len
+    binary += String.fromCharCode(bytes[i])
+    i++
+  binary
 
 class JsonIO extends require('./IO.coffee')
   constructor: (json) ->
